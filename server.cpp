@@ -72,11 +72,12 @@ void server::newConnection()
     connect(socket, &QTcpSocket::readyRead, this, &server::readyRead);
     connect(socket, &QTcpSocket::disconnected, this, &server::disconnected);
 
-    ui->textBrowser->append("-> " + socket->peerAddress().toString() + " has entered the Server!");
-
     QString sIP = socket->peerAddress().toString();
-    QString message = buffer;
-    message.prepend(sIP + ": ");
+    ui->textBrowser->append("-> " + sIP + " has entered to the Server!");
+
+    QByteArray buffer2;
+    QString message;
+    message.prepend("-> " + sIP + " has entered to the Server");
     foreach(QTcpSocket* socket, socketList)
     {
         if(socket)
@@ -86,9 +87,9 @@ void server::newConnection()
                 {
                     QDataStream socketStream(socket);
                     socketStream.setVersion(QDataStream::Qt_5_15);
-                    QByteArray byteArray = message.toUtf8();
+                    QByteArray buffer2 = message.toUtf8();
 
-                    socketStream << byteArray;
+                    socketStream << buffer2;
                 }
              }
     }
@@ -108,7 +109,7 @@ void server::readyRead()
 
     if(!socketStream.commitTransaction())
     {
-        ui->textBrowser->append("->More data coming...");
+        ui->textBrowser->append("-> More data coming...");
         return;
     }
 
