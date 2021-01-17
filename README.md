@@ -6,3 +6,5 @@
  - You need to know Server's IP address to join the chat room.
  
  There is a installer in the project file, if you want to test it. (64 bit)
+ 
+ ![ScreenShot](/Screenshot.png)
